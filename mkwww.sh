@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#################################
+# MKWWW                         #
+#################################
+# Version 1.0                   #
+# Written By: Jake Tobak        #
+#################################
+
+
+read -e -p "Enter website name (example.com): " NAME
+LOCATION=/srv/www/${NAME}
+
+if [ -d "$LOCATION" ];
+then
+        echo "The website [$NAME] already exists at [$LOCATION]!";
+        exit 1
+else
+        mkdir -p "$LOCATION";
+        groupadd "$NAME"
+        setfacl -Rm u::---,u:www-data:r--,g::---,g:${NAME}:rwx,o::---,d:u::---,d:u:www-data:r--,d:g::---,d:g:${NAME}:rwx "$$
+        mkdir -p ${LOCATION}/public;
+        mkdir -p ${LOCATION}/private;
+        mkdir -p ${LOCATION}/logs;
+        setfacl -Rm u:www-data:rw-,d:u:www-data:rw- ${LOCATION}/logs;
+        touch ${LOCATION}/logs/error.log;
+        touch ${LOCATION}/logs/access.log;
+        touch ${LOCATION}/logs/php.log;
+        touch ${LOCATION}/logs/mail.log;
+fi;
+
+exit 0
