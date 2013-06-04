@@ -18,7 +18,7 @@ then
 else
         mkdir -p "$LOCATION";
         groupadd "$NAME"
-        setfacl -Rm m:rwx,u::---,u:www-data:r--,g::---,g:${NAME}:rwx,o::---,d:m:rwx,d:u::---,d:u:www-data:r--,d:g::---,d:g:${NAME}:rwx "$$
+        setfacl -Rm m:rwx,u::---,u:www-data:r-x,g::---,g:${NAME}:rwx,o::---,d:m:rwx,d:u::---,d:u:www-data:r-x,d:g::---,d:g:${NAME}:rwx "$$
         mkdir -p ${LOCATION}/public;
         mkdir -p ${LOCATION}/private;
         mkdir -p ${LOCATION}/logs;
